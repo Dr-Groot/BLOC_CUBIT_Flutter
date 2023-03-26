@@ -14,3 +14,13 @@ A Cubit is class which extends BlocBase and can be extended to manage any type o
 ![image](https://user-images.githubusercontent.com/63160825/227774044-84f5366c-1177-4c27-ac06-c710fb22e88e.png)
 
 State changes in cubit begin with predefined function calls which can use the emit method to output new states. onChange is called right before a state change occurs and contains the current and next state.
+
+## BLOC
+
+![image](https://user-images.githubusercontent.com/63160825/227774126-50756e18-6af0-4239-90f7-e7b4430410ea.png)
+
+A Bloc is a more advanced class which relies on events to trigger state changes rather than functions. Bloc also extends BlocBase which means it has a similar public API as Cubit. However, rather than calling a function on a Bloc and directly emitting a new state, Blocs receive events and convert the incoming events into outgoing states.
+
+![image](https://user-images.githubusercontent.com/63160825/227774136-5e3f7bd0-df14-4ecf-8866-fbff47f662d3.png)
+
+State changes in bloc begin when events are added which triggers onEvent. The events are then funnelled through an EventTransformer. By default, each event is processed concurrently but a custom EventTransformer can be provided to manipulate the incoming event stream. All registered EventHandlers for that event type are then invoked with the incoming event. Each EventHandler is responsible for emitting zero or more states in response to the event. Lastly, onTransition is called just before the state is updated and contains the current state, event, and next state.
