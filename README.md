@@ -67,8 +67,33 @@ Here we are mentioning the initial state, which is 0 in Cubit.
   ),
 ```
 
+We can call cubit function by:
+```dart
+context.read<CounterCubit>().increment()
+///OR
+context.read<CounterCubit>().decrement()
+```
+
+
 ## Example 2
 
 [Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_2.zip)
+
+**Cubit**:
+We are emiting List of Post as state, initial state is empty list and getPosts function helps us to get data from the network request and emit as a
+list of Post.
+
+```dart
+class PostCubit extends Cubit<List<Post>> {
+  final _dataService = DataService();
+
+  PostCubit(): super([]);
+
+  void getPosts() async => emit(await _dataService.getPost());
+}
+```
+
+
+
 
 
