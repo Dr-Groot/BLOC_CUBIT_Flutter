@@ -27,7 +27,7 @@ State changes in bloc begin when events are added which triggers onEvent. The ev
 
 ## Example 1
 
-[Download Project](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_1.zip)
+[Download Example 1 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_1.zip)
 
 First comes **Cubit** :
 It contains the initial state as 0 and two methods for increment and decrement, here int is acting as a state.
@@ -68,5 +68,7 @@ Here we are mentioning the initial state, which is 0 in Cubit.
 ```
 
 ## Example 2
+
+[Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_2.zip)
 
 
