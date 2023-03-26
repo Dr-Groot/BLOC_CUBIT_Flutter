@@ -45,6 +45,7 @@ class CounterCubit extends Cubit<int> {
 ```
 
 **Bloc Provider** :
+Here we are mentioning the initial state, which is 0 in Cubit.
 
 ```dart
   @override
@@ -56,5 +57,16 @@ class CounterCubit extends Cubit<int> {
   }
 ```
 
+**Bloc Builder** :
+
+```dart
+  child: BlocBuilder<CounterCubit, int>(
+    builder: (context, state) {
+      return Text('$state', style: textTheme.displayMedium);
+    },
+  ),
+```
+
+## Example 2
 
 
