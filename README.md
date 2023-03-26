@@ -30,10 +30,10 @@ State changes in bloc begin when events are added which triggers onEvent. The ev
 [Download Project](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_1.zip)
 
 First comes **Cubit** :
+It contains the initial state as 0 and two methods for increment and decrement, here int is acting as a state.
 
 ```dart
 class CounterCubit extends Cubit<int> {
-  /// {@macro counter_cubit}
   CounterCubit() : super(0);
 
   /// Add 1 to the current state.
@@ -42,12 +42,19 @@ class CounterCubit extends Cubit<int> {
   /// Subtract 1 from the current state.
   void decrement() => emit(state - 1);
 }
-
 ```
 
+**Bloc Provider** :
 
-
-
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => CounterCubit(),
+      child: const CounterView(),
+    );
+  }
+```
 
 
 
