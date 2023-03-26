@@ -93,7 +93,40 @@ class PostCubit extends Cubit<List<Post>> {
 }
 ```
 
+**Bloc Provide** :
+If we want to call any function in cubit when initial state is called by adding three dots after class name and calling the function.
+
+```dart
+home: BlocProvider<PostCubit>(
+          create: (context) => PostCubit()..getPosts(),
+          child: PostView()
+      ),
+```
+
+**Bloc Builder** :
+
+```dart
+body: BlocBuilder<PostCubit, List<Post>>(
+        builder: (context, posts) {
+          if (posts.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.builder(itemBuilder: (context, index) {
+            return Card(
+              child: ListTile(
+                title: Text(posts[index].title ?? ""),
+              ),
+            );
+          });
+        },
+      ),
+```
 
 
+## Example 3
 
+[Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_2.zip)
 
