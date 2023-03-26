@@ -128,5 +128,150 @@ body: BlocBuilder<PostCubit, List<Post>>(
 
 ## Example 3
 
-[Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_2.zip)
+[Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_3.zip)
+
+In this example we have a state in a separate file.
+
+**Cubit**: 
+
+In this we have a HeroState as a state. We can call a function at a initial state by adding the function like this:
+
+```dart
+class HeroCubit extends Cubit<HeroState> {
+  final HeroNetwork _heroNetwork;
+
+  HeroCubit(this._heroNetwork) : super(HeroLoadingState()) {
+    fetchHeroList();
+  }
+
+  void fetchHeroList() async {
+    emit(HeroLoadingState());
+    try {
+      final heros = await _heroNetwork.getHeroData();
+      emit(HeroLoadedState(heros));
+    } catch (e) {
+      emit(HeroErrorState());
+    }
+  }
+
+  void fetchOneName() {
+    emit(HeroDemoState([HeroModel(name: 'Big', localisedName: 'Bee')]));
+  }
+
+}
+```
+
+**State:**
+
+```dart
+@immutable
+abstract class HeroState extends Equatable  {}
+
+class HeroLoadingState extends HeroState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class HeroLoadedState extends HeroState {
+  final List<HeroModel> heros;
+
+  HeroLoadedState(this.heros);
+
+  @override
+  List<Object?> get props => [heros];
+}
+
+class HeroErrorState extends HeroState {
+
+  @override
+  List<Object?> get props => [];
+}
+
+class HeroDemoState extends HeroState {
+  final List<HeroModel> heros;
+
+  HeroDemoState(this.heros);
+
+  @override
+  List<Object?> get props => [heros];
+
+}
+```
+
+**Bloc Provider:**
+We can mention the cubit name at starting of BlocProvider, which helps us to indetify for which cubit it works.
+
+```dart
+home: BlocProvider<HeroCubit>(
+        create: (BuildContext context) => HeroCubit(HeroNetwork()),
+          child: HeroView()
+      ),
+```
+
+**Bloc Builder:**
+Now we can show the UI for different state.
+
+```dart
+body: BlocBuilder<HeroCubit, HeroState>(
+        builder: (context, state) {
+
+          if (state is HeroLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state is HeroLoadedState) {
+           List<HeroModel> heroList = state.heros;
+           heroList.forEach((element) {
+             if (element.localisedName == 'Axe') {
+               debugPrint('AXE FOUND');
+             }
+           });
+           // context.read<HeroCubit>().fetchOneName();
+           return ListView.builder(
+               itemCount: heroList.length,
+               itemBuilder: (_, index) {
+                 return Card(
+                   color: Colors.black,
+                   child: ListTile(
+                     title: Text(
+                       '${heroList[index].localisedName}',
+                       style:
+                       const TextStyle(color: Colors.white, fontSize: 17.0),
+                     ),
+                     subtitle: Text(
+                       '${heroList[index].name}',
+                       style: const TextStyle(color: Colors.red),
+                     ),
+                   ),
+                 );
+               });
+          }
+
+          if (state is HeroErrorState) {
+            return Center(
+              child: Container(
+                child: const Text('Error')
+              ),
+            );
+          }
+
+          if (state is HeroDemoState) {
+            List<HeroModel> demoList = state.heros;
+            return Center(
+              child: Container(
+                child: Text('${demoList[0].name}', style: TextStyle(color: Colors.white),),
+              ),
+            );
+          }
+
+          return Container();
+        },
+      ),
+```
+
+
+
 
