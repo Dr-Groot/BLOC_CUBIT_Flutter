@@ -129,7 +129,7 @@ body: BlocBuilder<PostCubit, List<Post>>(
 
 ## Example 3
 
-[Download Example 2 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_3.zip)
+[Download Example 3 Files](https://github.com/Dr-Groot/BLOC_Flutter/blob/main/Example_3.zip)
 
 In this example we have a state in a separate file.
 
